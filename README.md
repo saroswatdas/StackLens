@@ -2,44 +2,46 @@
 
 ### Skill-Based Career Intelligence
 
-StackLens is a machine-learning powered career recommendation tool that analyzes a user's technical skills and identifies the career paths that best match their current skill set.
+StackLens is a content-based career recommendation system that analyzes a user's technical skills and identifies career paths that best match their current skill set.
 
-Instead of asking:
+Instead of asking users to choose a career first, StackLens works in reverse:
 
-> "Which career should I choose?"
+> **Give me your skills → I'll show you where they fit.**
 
-StackLens asks:
-
-> "Based on what I already know, which career paths fit me best?"
+The system uses **TF-IDF vectorization** and **cosine similarity** to compare user-provided skills against predefined career profiles and returns the top three career matches.
 
 ---
 
-## ✦ What it does
+## 🚀 Live Demo
 
-Enter your technical skills and StackLens:
+**Try StackLens:**  
+[Open the Live Application](https://saroswatdas-stacklens-app-odvz4x.streamlit.app/)
 
-- Analyzes your skill profile
-- Compares it with different career profiles
-- Calculates skill similarity
-- Ranks the strongest career matches
-- Shows your top 3 recommendations
-- Displays the skills contributing to each match
+---
 
-### Example
+## ✨ Features
 
-**Input**
+- Enter technical skills in a simple comma-separated format
+- Validates skills against the career dataset
+- Uses TF-IDF to represent skills numerically
+- Calculates similarity using cosine similarity
+- Ranks career paths based on skill compatibility
+- Displays the top 3 career recommendations
+- Shows similarity scores for each recommendation
+- Highlights skills that match each career
+- Clean, responsive Streamlit interface
+- Works entirely from a predefined career-skill dataset
+
+---
+
+## 🧠 How It Works
+
+StackLens follows a content-based recommendation approach.
 
 ```text
-Python, SQL, Machine Learning
-
-Possible recommendations
-1. Data Scientist
-2. AI Engineer
-3. Machine Learning Engineer
-
-⚙ How it works
-StackLens uses a simple content-based recommendation pipeline:
 User Skills
+     ↓
+Skill Validation
      ↓
 TF-IDF Vectorization
      ↓
@@ -47,50 +49,46 @@ Cosine Similarity
      ↓
 Career Ranking
      ↓
-Top 3 Matches
+Top 3 Recommendations
 
-01 — Skill Input
-The user enters their technical skills.
+1. Skill Input
+The user enters technical skills such as:
 Python, SQL, Machine Learning
 
-02 — TF-IDF
-The skills are converted into numerical vectors using TF-IDF (Term Frequency–Inverse Document Frequency).
-This allows the system to represent skill profiles mathematically.
-03 — Cosine Similarity
-The user's skill vector is compared against every career profile using cosine similarity.
-A higher score means the skill profiles are more closely aligned.
-04 — Ranking
-The career profiles are sorted by similarity and the three strongest matches are displayed.
-🧠 Recommendation Example
-For:
+A minimum of three skills is required.
+2. Skill Validation
+The entered skills are compared against the skills available in the dataset.
+Unknown skills are identified and reported rather than silently affecting the recommendation.
+3. TF-IDF Vectorization
+Each career profile is represented as a text document containing its required skills.
+TF-IDF converts these skill profiles into numerical vectors based on the importance of each term.
+4. Cosine Similarity
+The user's skill vector is compared with every career profile using cosine similarity.
+A higher similarity score indicates a stronger match between the user's skills and the career profile.
+5. Career Ranking
+Career profiles are sorted by similarity score, and the three highest-scoring careers are displayed.
+📊 Example
+Input
 Python, SQL, Machine Learning
 
-StackLens might produce:
-Career	Similarity
-Data Scientist	69.5%
-AI Engineer	61.9%
-Machine Learning Engineer	58.4%
+Possible Recommendations
+1. Data Scientist
+2. Machine Learning Engineer
+3. AI Engineer
 
-
-The application also shows which skills matched each career.
-Similarity is a measure of skill-profile alignment, not a prediction of career success.
-
-🖥️ Interface
-StackLens uses a minimal dark interface designed around a technical analysis workflow.
-The application contains:
-Skill Analysis
-Enter your current technical stack.
-Career Fit Analysis
-View the strongest career matches and their similarity scores.
-Recommendation Pipeline
-See how the system moves from skills → vectors → similarity → ranking.
-🛠 Tech Stack
+Each recommendation includes:
+- Career role
+- Similarity percentage
+- Matching skills
+The exact ranking depends on the skills entered and the career profiles available in the dataset.
+🛠️ Tech Stack
 Technology	Purpose
-Python	Core programming
-Pandas	Dataset processing
-Scikit-learn	TF-IDF & cosine similarity
-Streamlit	Web interface
-CSV	Career skill dataset
+Python	Core programming language
+Streamlit	Web application interface
+Pandas	Dataset handling
+Scikit-learn	TF-IDF and cosine similarity
+Git & GitHub	Version control and source hosting
+Streamlit Community Cloud	Deployment
 
 
 📁 Project Structure
@@ -105,85 +103,127 @@ StackLens/
 ├── README.md
 └── .gitignore
 
-Main files
 app.py
-The Streamlit application and recommendation interface.
+Contains the Streamlit application, interface, user input handling, validation, and recommendation display.
 recommendation.py
-Command-line version of the recommendation system.
+Contains the recommendation logic using TF-IDF vectorization and cosine similarity.
 data/raw_skills.csv
-Career profiles and their associated technical skills.
-🚀 Run Locally
-Clone the repository:
-git clone https://github.com/saroswatdas/StackLens.git
-cd StackLens
+Contains the career profiles and their associated technical skills.
 
-Install the dependencies:
-python -m pip install -r requirements.txt
-
-Start the application:
-python -m streamlit run app.py
-
-Then open:
-http://localhost:8501
-
-🧪 Try These Inputs
-Data / AI
-Python, SQL, Machine Learning
-
-Frontend
-HTML, CSS, JavaScript, React
-
-Cloud / DevOps
-AWS, Docker, Kubernetes
-
-Backend
-Java, Python, SQL, APIs
-
-Software Development
-C++, Java, SQL
-
-📊 Current Career Profiles
-The dataset currently includes roles such as:
+🧪 Current Career Profiles
+The current dataset includes career paths such as:
 - Data Scientist
-- Data Analyst
-- AI Engineer
-- Machine Learning Engineer
+- DevOps Engineer
 - Backend Developer
 - Frontend Developer
-- Full Stack Developer
-- Software Developer
-- DevOps Engineer
 - Cloud Engineer
-- Cloud Developer
+- Data Analyst
 - Cybersecurity Analyst
-- Network Engineer
+- AI Engineer
+- Machine Learning Engineer
+- Software Developer
+- Full Stack Developer
 - Database Administrator
+- Cloud Developer
+- Network Engineer
 - Mobile App Developer
-⚠️ Limitations
-StackLens is an educational recommendation prototype.
-The quality of the recommendations depends on the career profiles and skills available in the dataset.
-The current system does not consider:
-- Work experience
-- Education
-- Salary expectations
-- Location
-- Personal interests
-- Soft skills
-- Current job-market demand
-Therefore, the similarity score should be interpreted as skill similarity, not career suitability.
-🔭 Future Improvements
-Some possible extensions are:
-- Larger career and skill dataset
-- Skill aliases such as JS → JavaScript
-- Skill-gap analysis
-- Personalized career profiles
-- Searchable skill selection
-- Real job-market data
-- Experience-level based recommendations
+The recommendation quality depends on the coverage and quality of these career profiles.
 
+💻 Run Locally
+1. Clone the repository
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd StackLens
+
+2. Create a virtual environment
+Windows:
+python -m venv venv
+venv\Scripts\activate
+
+macOS/Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install dependencies
+pip install -r requirements.txt
+
+4. Run the application
+python -m streamlit run app.py
+
+The application will open locally at:
+http://localhost:8501
+
+🧪 Test Inputs
+You can test the application with examples such as:
+Python, SQL, Machine Learning
+
+HTML, CSS, JavaScript, React
+
+AWS, Docker, Kubernetes, Linux
+
+Java, C++, SQL
+
+The last example is useful for testing how the system handles skills that may have different coverage across career profiles.
+📐 Recommendation Method
+StackLens uses a simple content-based recommendation model.
+For each career:
+Career Skills → TF-IDF Vector
+
+The user's input is also converted into a TF-IDF representation:
+User Skills → TF-IDF Vector
+
+The system then calculates:
+Cosine Similarity(User Vector, Career Vector)
+
+The resulting similarity scores are used to rank the available careers.
+This approach allows recommendations to be generated without requiring a large historical user dataset.
+
+⚠️ Limitations
+StackLens is designed as a skill-matching prototype rather than a complete career guidance platform.
+Current limitations include:
+- Recommendations depend on the predefined dataset
+- Skills outside the dataset have limited influence
+- Similarity does not represent actual job-market demand
+- The system does not consider work experience or seniority
+- It does not currently consider salary expectations
+- It does not analyze soft skills
+- It does not use real-time job-market data
+- Career profiles are manually defined rather than learned from job postings
+The recommendations should therefore be treated as skill-based suggestions, not definitive career advice.
+
+🔮 Future Improvements
+Possible improvements include:
+- Expand the career and skill dataset
+- Add skill synonyms and normalization
+- Introduce skill weighting
+- Include experience level
+- Add salary and industry preferences
+- Incorporate real-world job posting data
+- Add learning-path recommendations for missing skills
+- Allow users to compare multiple career paths
+- Track recommendation history
+- Experiment with semantic embeddings and transformer-based models
+
+🎯 Project Objective
+The goal of StackLens is to demonstrate how a relatively simple machine learning pipeline can be turned into a practical recommendation system.
+The project combines:
+Data Processing
+      +
+Machine Learning
+      +
+Similarity Analysis
+      +
+Recommendation Logic
+      +
+Interactive Web Application
+
+It serves as a practical implementation of content-based filtering using technical skill profiles.
 👨‍💻 Author
 Saroswat Das
-Computer Science Student
-Interested in AI/ML, software development, and building practical technology projects.
+Built as a machine learning and web application project using Python, Scikit-learn, Pandas, and Streamlit.
+
+📌 Project Status
+Status: Deployed 🚀
+StackLens is currently available as a live Streamlit application and can be run locally using the instructions above.
+
 Built with
 Python · Scikit-learn · Pandas · Streamlit
